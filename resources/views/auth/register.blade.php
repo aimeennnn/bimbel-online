@@ -16,6 +16,20 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Ocupation -->
+        <div class="mt-4">
+            <x-input-label for="ocupation" :value="__('ocupation')" />
+            <x-text-input id="ocupation" class="block mt-1 w-full" type="text" name="ocupation" :value="old('ocupation')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('ocupation')" class="mt-2" />
+        </div>
+
+        <!-- Avatar -->
+        <div class="mt-4">
+            <x-input-label for="avatar" :value="__('avatar')" />
+            <x-text-input id="avatar" class="block mt-1 w-full" type="file" name="avatar" :value="old('avatar')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
