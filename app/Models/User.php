@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,5 +48,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function students(){
+      return $this->belongsToMany(User::class, 'course_students'); 
+    } 
+
+    public function subscribe_transactions(){
+        return $this->hasMany(SubscribeTransaction::class);
+    }
+
+    public function hasActiveSubcription(){
+        $latestSubcription = $this->subscribe_transactions()->where('is_paid', true)->latest('update_at')->first();
+
+        if(!$latestSubcription){
+            return false;
+        }
+
+        $subcriptionEndDate = Carbon::parse($latestSubcription->subcription_start_date)->addMonth(1);
+        return Carbon::now()->lessThanOrEqualTo($subcriptionEndDate);
     }
 }
